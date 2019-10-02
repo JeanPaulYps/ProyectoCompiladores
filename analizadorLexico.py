@@ -1,41 +1,49 @@
 import re
-palabrasReservadas = {"si","sinosi","sino","para","mientras","vacio","main"}
 patronesTokens = [
-    ('palabrasReservadas',          r'(si|sinosi|sino|para|mientras|vacio|main)'),
-    ('tiposDeDatos',                r'(entero|cadena|real|bool)'),
+    ('palabrasReservada',           r'(si|sinosi|sino|para|mientras|vacio|main)'),
+    ('tiposDeDato',                 r'(entero|cadena|real|bool)'),
     ('repeticion',                  r'(para|mientras)'),
     ('importar',                    r'(importar)'),
     ('clase',                       r'(clase)'),
-    ('booleanos',                   r'(Verdadero|Falso)'),
-    ('variables',                   r'[A-z][\w]*'),
+    ('booleano',                    r'(Verdadero|Falso)'),
+    ('variable',                    r'[A-z][\w]*'),
     ('asignacion',                  r'(=|->)'),
-    ('operadorAritmeticos',         r'(\+|\-|(?<!\/)\*(?!\/)|(?<!\*|\/)\/(?!\*|\/)|%)'),
+    ('operadorAritmetico',          r'(\+|\-|(?<!\/)\*(?!\/)|(?<!\*|\/)\/(?!\*|\/)|%)'),
     ('operadorLogico',              r'(&&|\|\||!)'),
     ('operadorRelacional',          r'(==|!=|>|<|>=|<=)'),
-    ('saltosDeLineas',              r'\n'),
+    ('saltoDeLinea',                r'\n'),
     ('espacioenblanco',             r'[ \t]+'),
-    ('comentarios',                 r'(//[\w\d ]*|/\*[\w\d \n]+\*/)'),
+    ('comentario',                  r'(//[\w\d ]*|/\*[\w\d \n]+\*/)'),
     ('terminador',                  r';'),
-    ('otrosSimbolos',               r'(,|\(|\)|\[|\])'),
-    ('bloques',                     r'[{}]'),
-    ('numeros',                     r'\d+(\.d*)?'),
-    ('cadenas',                     r'\"[\w\d ]*\"'),
+    ('otrosSimbolo',                r'(,|\(|\)|\[|\])'),
+    ('bloque',                      r'[{}]'),
+    ('numero',                      r'\d+(\.d*)?'),
+    ('cadena',                      r'\"[\w\d ]*\"'),
     ('caracter',                    r'\"[\w\d ]?\"'),
     ('ERROR',                       r'.'),
 ]
 
-def analizadorLexico():
-    pass
-
 def obtenerTokensRegex ():
     return '|'.join('(?P<%s>%s)' % pair for pair in patronesTokens)
 
-def prueba():
+def obtenerTokens (codigo):
+    codigo = codigo.replace("\r", "\n")
     tokensRegex = obtenerTokensRegex()
-    print(tokensRegex)
-
-TokensRegex = obtenerTokensRegex()
-codigo = open("prueba.txt",'r')
+    tuplasTokens = []
+    for tokens in re.finditer(tokensRegex, codigo):
+        tipo = tokens.lastgroup
+        valor = tokens.group()
+        if tipo == 'espacioenblanco' or tipo == "saltoDeLinea":
+            pass
+        elif tipo == 'ERROR':
+            tuplasTokens.append((valor,tipo)) 
+            return tuplasTokens
+        else:
+            tuplasTokens.append((valor,tipo))
+    return tuplasTokens
+        
+"""codigo = open("prueba.txt",'r')
 codigo = codigo.read()
-for i in re.finditer(TokensRegex, codigo):
-    print(i, i.lastgroup)
+Tokens = obtenerTokens(codigo)
+for i, j in Tokens:
+    print(i,j)"""
