@@ -13,6 +13,8 @@ entero main (){
     }
     devolver 1;
     bool a = Verdadero;
-    /* comentario */
+    /* 
+    comentario
+     */
     //comentario2
 }
