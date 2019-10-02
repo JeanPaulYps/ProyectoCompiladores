@@ -6,9 +6,7 @@ app = Flask(__name__)
 def enviarPagina():
     if request.method == "POST":
         codigo = request.form['codigo']
-        print(codigo)
         tokens = obtenerTokens(codigo)
-        print(tokens)
         return render_template("tokens.html", tokens = tokens)
     else:
         return render_template("prueba.html")
