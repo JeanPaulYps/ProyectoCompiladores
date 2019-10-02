@@ -2,14 +2,14 @@ import re
 palabrasReservadas = {"si","sinosi","sino","para","mientras","vacio","main"}
 patronesTokens = [
 ('tiposDeDatos',                    r'(entero|cadena|real|bool)'),
-    ('variables',                   r'[\w]{1}[\w\d_]*'),
+    ('variables',                   r'[A-z][\w]*'),
     ('asignacion',                  r'='),
-    ('operadorAritmeticos',         r'[+\-*/%]'),
+    ('operadorAritmeticos',         r'(\+|\-|(?<!\/)\*(?!\/)|(?<!\*|\/)\/(?!\*|\/)|%)'),
     ('operadorLogico',              r'(&&|\|\||!)'),
     ('operadorRelacional',          r'(==|!=|>|<|>=|<=)'),
     ('saltosDeLineas',              r'\n'),
     ('espacioenblanco',             r'[ \t]+'),
-    ('comentarios',                 r'(//[\w\d ]+$|/\*[\w\d ]+\*/)'),
+    ('comentarios',                 r'(//[\w\d ]*|/\*[\w\d ]+\*/)'),
     ('terminador',                  r';'),
     ('otrosSimbolos',               r'(,|\(|\)|->|\[|\])'),
     ('repeticion',                  r'(para|mientras)'),

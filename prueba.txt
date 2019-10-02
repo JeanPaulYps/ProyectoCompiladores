@@ -1,0 +1,18 @@
+importar miClase;
+
+entero main (){
+    entero a,b;
+    a = 20;
+    si (a > 20)
+    {
+        imprimir -> 20;
+    }
+    sino
+    {
+        imprimir -> 40;
+    }
+    devolver 1;
+    bool a = Verdadero;
+    /* comentario */
+    //comentario2
+}
