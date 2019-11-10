@@ -11,10 +11,12 @@ entero main (){
     {
         imprimir -> 40;
     }
-    devolver 1;
     bool a = Verdadero;
     /* 
     comentario
      */
     //comentario2
+    clase1.metodo();
+    clase1.atributo;
+    devolver 1;
 }
