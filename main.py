@@ -8,6 +8,6 @@ for i, j in Tokens.tokens:
 for i in Tokens.tablaDeSimbolos:
     print(i)
 
-print(Tokens.verSiguienteToken())
-print(Tokens.sacarSiguienteToken())
-print(Tokens.verSiguienteToken())
+print(Tokens.verSiguienteSimbolo())
+print(Tokens.sacarSimbolo())
+print(Tokens.verSiguienteSimbolo())

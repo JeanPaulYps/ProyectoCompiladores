@@ -49,8 +49,16 @@ class Lexico():
                 tokens.append((valor,tipo))
         return tokens
 
-    def verSiguienteToken(self):
-        return self.tokens[0]
-    
-    def sacarSiguienteToken(self):
+    def verSiguienteSimbolo(self):
+        siguienteToken = self.tokens[0][0]
+        tipoToken = self.tokens[0][1]
+        if tipoToken == "ID":
+            return "id"
+        return siguienteToken
+
+    def sacarSimbolo(self):
+        siguienteToken = self.tokens[0][0]
+        tipoToken = self.tokens[0][1]
+        if tipoToken == "ID":
+            return "id"
         return self.tokens.pop(0)
