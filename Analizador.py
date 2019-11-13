@@ -62,7 +62,7 @@ class Analizador ():
                 print("ERROR")
                 break
             if siguienteToken == "$" and cimaDePila == "$":
-                accion = "ACEPTAr"
+                accion = "ACEPTAR"
             self.estados.append((pila,simbolos, accion))
         
 

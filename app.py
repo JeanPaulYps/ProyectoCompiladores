@@ -21,6 +21,6 @@ def analizador():
         analizador = Analizador(Analizador.leerTablaTAS("EjemploClase.csv"), lexico)
         analizador.analizar()
         print(analizador.estados)
-        return render_template("inicio_analizador.html", estados = analizador.estados)
+        return render_template("analizador.html", estados = analizador.estados)
     else:
-        return render_template("prueba.html")
+        return render_template("inicio_analizador.html")
