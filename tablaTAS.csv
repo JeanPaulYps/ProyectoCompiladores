@@ -3,7 +3,7 @@
 <libreria>|importar ID ; <libreria>|?|?||||||||?|?|?|?|?|?|||||||||||||||||||||||||||
 <clase>||clase ID ( <argumento> ) { <cuerpoClase> } <clase>|?||||||||?|?|?|?|?|?|||||||||||||||||||||||||||
 <cuerpoClase>|||||||||||vacio ID ( <argumento> ) { <cuerpo> } <otroCuerpoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|||||||||||||||||||||||||||
-<otroCuerpoClase>|||||||||||<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>||||||||?|||||||||||||||||||
+<otroCuerpoClase>|||||||||||<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>||||||||?|||||||||||||||||||ID <asignacion> ; <otroCuerpoClase>
 <elementoClase>||||||||||||||||||||<variable> ; <otroCuerpoClase>||<metodo> <otroCuerpoClase>||?|<variable> ; <otroCuerpoClase>||||||||||||||<variable> ; <otroCuerpoClase>||<variable> ; <otroCuerpoClase>||
 <funcion>|||?||||||||vacio ID ( <argumento> ) { <cuerpo> } <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|||||||||||||||||||||||||||
 <metodo>||||||||||||||||||||||( <argumento> ) { <otroElemento> retornar <retorno> ; }|||||||||||||||||||||
@@ -18,7 +18,7 @@
 <mientras>||||||||mientras ( <condicion> ) { <cuerpo> } <otroElemento>|||||||||||||||||||||||||||||||||||
 <para>|||||||para ( ID = <valor> ; ID <opRelacional> <valor> ; ID = <valor> ) { <cuerpo> } <otroElemento>||||||||||||||||||||||||||||||||||||
 <si>||||si ( <condicion> ) { <cuerpo> } <otroSi> <otroElemento>|||||||||||||||||||||||||||||||||||||||
-<otroSi>|||||sinosi ( <condicion> ) { <cuerpo> } <otroSi>|sino { <cuerpo> }||||||||||||||||||?|||||||||||||||||||
+<otroSi>||||?|sinosi ( <condicion> ) { <cuerpo> } <otroSi>|sino { <cuerpo> }|?|?|?|?||?|?|?|?|?||||||||?|||||||||||||||||||?
 <variable>||||||||||||||||||||[ <vector>|||||= <valor> <otraVariable>||||||||||||||<otraVariable>||?||
 <otraVariable>|||||||||||||||||||||||||||||||||||||||, ID <variable>||?||
 <vector>|||||||||||||||||<valor> ]|<valor> ]|||] = { <valor> <otroValor> }|||||||||||||||||||||<valor> ]|<valor> ]

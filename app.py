@@ -20,7 +20,6 @@ def analizador():
         lexico = Lexico(codigo)
         analizador = Analizador(Analizador.leerTablaTAS("tablaTAS.csv"), lexico)
         analizador.analizar()
-        print(analizador.estados)
         return render_template("analizador.html", estados = analizador.estados)
     else:
         return render_template("inicio_analizador.html")

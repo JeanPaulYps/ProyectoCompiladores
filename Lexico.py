@@ -13,7 +13,7 @@ class Lexico():
         ('ID',                          r'[a-zA-Z][\w]*'),
         ('asignacion',                  r'(=(?!=)|->)'),
         ('operadorAritmetico',          r'(\+|\-|(?<!\/)\*(?!\/)|(?<!\*|\/)\/(?!\*|\/)|%)'),
-        ('operadorLogico',              r'(&&|\|\||!(?!=))'),
+        ('operadorLogico',              r'(&&|\|\|)'),
         ('operadorRelacional',          r'(==|!=|>(?!=)|<(?!=)|>=|<=)'),
         ('saltoDeLinea',                r'\n'),
         ('espacioenblanco',             r'[ \t]+'),
