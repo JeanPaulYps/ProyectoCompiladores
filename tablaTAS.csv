@@ -1,0 +1,39 @@
+|importar|clase|main|si|sinosi|sino|para|mientras|leer|imprimir|vacio|entero|real|caracter|cadena|bool|verdadero|falso|retornar|[|]|(|)|}|=|%%|+|-|*|/|&&|"||"|==|!=|>|<|>=|<=|,|.|;|VALOR|ID
+<S>|<libreria> <clase> <funcion> <main>|<libreria> <clase> <funcion> <main>|<libreria> <clase> <funcion> <main>||||||||<libreria> <clase> <funcion> <main>|<libreria> <clase> <funcion> <main>|<libreria> <clase> <funcion> <main>|<libreria> <clase> <funcion> <main>|<libreria> <clase> <funcion> <main>|<libreria> <clase> <funcion> <main>|||||||||||||||||||||||||||
+<libreria>|importar ID ; <libreria>|?|?||||||||?|?|?|?|?|?|||||||||||||||||||||||||||
+<clase>||clase ID ( <argumento> ) { <cuerpoClase> } <clase>|?||||||||?|?|?|?|?|?|||||||||||||||||||||||||||
+<cuerpoClase>|||||||||||vacio ID ( <argumento> ) { <cuerpo> } <otroCuerpoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|<tipoDato> ID <elementoClase>|||||||||||||||||||||||||||
+<otroCuerpoClase>|||||||||||<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>|<cuerpoClase>||||||||?|||||||||||||||||||
+<elementoClase>||||||||||||||||||||<variable> ; <otroCuerpoClase>||<metodo> <otroCuerpoClase>||?|<variable> ; <otroCuerpoClase>||||||||||||||<variable> ; <otroCuerpoClase>||<variable> ; <otroCuerpoClase>||
+<funcion>|||?||||||||vacio ID ( <argumento> ) { <cuerpo> } <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|<tipoDato> ID <metodo> <funcion>|||||||||||||||||||||||||||
+<metodo>||||||||||||||||||||||( <argumento> ) { <otroElemento> retornar <retorno> ; }|||||||||||||||||||||
+<retorno>|||||||||||||||||<valor>|<valor>||||<valor>|||||||||||||||||||?|<valor>|<valor>
+<main>|||main ( ) { <cuerpo> }||||||||||||||||||||||||||||||||||||||||
+<cuerpo>||||<si>|||<para>|<mientras>|<lectura>|<impresion>||<tipoDato> ID <variable> ; <otroElemento>|<tipoDato> ID <variable> ; <otroElemento>|<tipoDato> ID <variable> ; <otroElemento>|<tipoDato> ID <variable> ; <otroElemento>|<tipoDato> ID <variable> ; <otroElemento>|||||||||||||||||||||||||||ID <asignacion> ; <otroElemento>
+<otroElemento>||||<cuerpo>|||<cuerpo>|<cuerpo>|<cuerpo>|<cuerpo>||<cuerpo>|<cuerpo>|<cuerpo>|<cuerpo>|<cuerpo>|||?|||||?|||||||||||||||||||<cuerpo>
+<asignacion>||||||||||||||||||||[ <valor> ] = <valor>|||||= <valor>|||||||||||||||. ID <elementosObjeto>|||ID ( <constructor> )
+<elementosObjeto>||||||||||||||||||||||( <constructor> )|||= <valor>||||||||||||||||||
+<impresion>||||||||||imprimir -> <valor> ; <otroElemento>|||||||||||||||||||||||||||||||||
+<lectura>|||||||||leer -> ID ; <otroElemento>||||||||||||||||||||||||||||||||||
+<mientras>||||||||mientras ( <condicion> ) { <cuerpo> } <otroElemento>|||||||||||||||||||||||||||||||||||
+<para>|||||||para ( ID = <valor> ; ID <opRelacional> <valor> ; ID = <valor> ) { <cuerpo> } <otroElemento>||||||||||||||||||||||||||||||||||||
+<si>||||si ( <condicion> ) { <cuerpo> } <otroSi> <otroElemento>|||||||||||||||||||||||||||||||||||||||
+<otroSi>|||||sinosi ( <condicion> ) { <cuerpo> } <otroSi>|sino { <cuerpo> }||||||||||||||||||?|||||||||||||||||||
+<variable>||||||||||||||||||||[ <vector>|||||= <valor> <otraVariable>||||||||||||||<otraVariable>||?||
+<otraVariable>|||||||||||||||||||||||||||||||||||||||, ID <variable>||?||
+<vector>|||||||||||||||||<valor> ]|<valor> ]|||] = { <valor> <otroValor> }|||||||||||||||||||||<valor> ]|<valor> ]
+<argumento>||||||||||||<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|||||||?||||||||||||||||||||
+<listaArg>|||||||||||||||||||||||?||||||||||||||||, <tipoDato> ID <listaArg>||||
+<condicion>|||||||||||||||||<valor> <opRelacional> <valor> <otraCondicion>|<valor> <opRelacional> <valor> <otraCondicion>||||||||||||||||||||||||<valor> <opRelacional> <valor> <otraCondicion>|<valor> <opRelacional> <valor> <otraCondicion>
+<otraCondicion>|||||||||||||||||||||||?||||||||<opLogico> <condicion>|<opLogico> <condicion>|||||||||||
+<constructor>|||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>|||||?|||||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>
+<otroConstructor>|||||||||||||||||||||||?||||||||||||||||, <valor> <otroConstructor>||||
+<operacion>|||||||||||||||||||||?||?|?||<opAritmetico> <valor>|<opAritmetico> <valor>|<opAritmetico> <valor>|<opAritmetico> <valor>|<opAritmetico> <valor>|?|?|?|?|?|?|?|?|?||?||
+<opLogico>|||||||||||||||||||||||||||||||&&|"||"|||||||||||
+<opRelacional>|||||||||||||||||||||||||||||||||==|!=|>|<|>=|<=|||||
+<opAritmetico>||||||||||||||||||||||||||%%|+|-|*|/|||||||||||||
+<tipoDato>||||||||||||entero|real|caracter|cadena|bool|||||||||||||||||||||||||||
+<valor>|||||||||||||||||verdadero|falso||||( <tiposValor> <operacion> ) <operacion>||||||||||||||||||||<tiposValor> <operacion>|<tiposValor> <operacion>
+<tiposValor>||||||||||||||||||||||||||||||||||||||||||VALOR|ID <elementosValor>
+<elementosValor>||||||||||||||||||||[ <valor> ]|?||?|?||?|?|?|?|?|?|?|?|?|?|?|?|?|?|. ID|?||
+<otroValor>||||||||||||||||||||||||?|||||||||||||||, <valor> <otroValor>||||

@@ -18,7 +18,7 @@ def analizador():
     if request.method == "POST":
         codigo = request.form['codigo']
         lexico = Lexico(codigo)
-        analizador = Analizador(Analizador.leerTablaTAS("EjemploClase.csv"), lexico)
+        analizador = Analizador(Analizador.leerTablaTAS("tablaTAS.csv"), lexico)
         analizador.analizar()
         print(analizador.estados)
         return render_template("analizador.html", estados = analizador.estados)

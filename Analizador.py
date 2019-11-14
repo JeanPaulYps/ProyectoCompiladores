@@ -6,13 +6,13 @@ class Analizador ():
         self.terminales = tablaTAS[0][:]
         self.producciones = [fila[0] for fila in tablaTAS]
         self.lexico = lexico
-        self.pila = ["$", "S"]
+        self.pila = ["$", "<S>"]
 
     @staticmethod
     def leerTablaTAS(nombreArchivo):
         tabla = []
         with open(nombreArchivo, newline='') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter=';')
+            spamreader = csv.reader(csvfile, delimiter='|')
             for row in spamreader:
                 tabla.append(row)
         return tabla
@@ -31,7 +31,7 @@ class Analizador ():
         cimaDePila = self.pila[-1]
         accion = ""
         while siguienteToken != "$" or cimaDePila != "$":
-            print("{}\t\t{}".format(self.pila,self.lexico.obtenerPilaSimbolos()))
+            #print("{}\t\t{}".format(self.pila,self.lexico.obtenerPilaSimbolos()))
             pila = self.pila[:]
             simbolos = self.lexico.obtenerPilaSimbolos()
             siguienteToken = self.lexico.verSiguienteSimbolo()
@@ -44,6 +44,7 @@ class Analizador ():
                 fila = self.obtenerIndice(cimaDePila, self.producciones)
                 columna = self.obtenerIndice(siguienteToken, self.terminales)
                 if fila == -1 or columna == -1:
+                    print(siguienteToken)
                     self.estados.append((pila,simbolos, "ERROR"))
                     print("ERROR")
                     break
@@ -51,19 +52,22 @@ class Analizador ():
                 accion = "{} -> {}".format(cimaDePila, produccion)
                 self.pila.pop(-1)
                 if not produccion:
+                    print(siguienteToken)
                     self.estados.append((pila,simbolos, "ERROR"))
                     print("ERROR")
                     break
-                if produccion != "&":
+                if produccion != "?":
                     for simbolo in self.obtenerSimbolos(produccion): 
                         self.pila.append(simbolo)
             else:
+                print(siguienteToken)
                 self.estados.append((pila,simbolos, "ERROR"))
                 print("ERROR")
                 break
             if siguienteToken == "$" and cimaDePila == "$":
                 accion = "ACEPTAR"
-            self.estados.append((pila,simbolos, accion))
+                print("ACEPTAR")
+            self.estados.append(( " ".join(pila) ,siguienteToken, accion))
         
 
     @staticmethod
@@ -71,13 +75,21 @@ class Analizador ():
         return produccion.split(" ")[::-1]
 
 
-    
-"""
-entrada = ["while", "id", "{", "while", "id", "{","}", "}","$"]
-entrada = "while  a { while a {}}"
+"""    
+f = open ('prueba.txt','r')
+entrada = f.read()
+f.close()
 lexico = Lexico(entrada)
-print(lexico.tokens)
-a = Analizador(Analizador.leerTablaTAS("EjemploClase.csv"), lexico)
+
+for i in lexico.tokens:
+    print(i)
+
+a = Analizador(Analizador.leerTablaTAS("tablaTAS.csv"), lexico)
 a.analizar()
-for i in a.estados:
-    print(i)"""
+
+f2 = open("salida.txt", "w")
+for i1,i2,i3 in a.estados:
+   f2.write("{}\t{}\t{}\n".format(i1,i2,i3))
+f2.close()
+
+   """

@@ -8,16 +8,16 @@ class Lexico():
     tablaDeSimbolos = []
     palabrasReservadas = ["si","sino","sinosi","para","mientras","vacio","main",
                           "importar","real","cadena","bool","caracter","leer",
-                          "imprimir","clase","entero","Verdadero","Falso", "while"]
+                          "imprimir","clase","entero","verdadero","falso", "retornar"]
     patronesTokens = [
-        ('ID',                          r'[A-z][\w]*'),
-        ('asignacion',                  r'(=|->)'),
+        ('ID',                          r'[a-zA-Z][\w]*'),
+        ('asignacion',                  r'(=(?!=)|->)'),
         ('operadorAritmetico',          r'(\+|\-|(?<!\/)\*(?!\/)|(?<!\*|\/)\/(?!\*|\/)|%)'),
-        ('operadorLogico',              r'(&&|\|\||!)'),
-        ('operadorRelacional',          r'(==|!=|>|<|>=|<=)'),
+        ('operadorLogico',              r'(&&|\|\||!(?!=))'),
+        ('operadorRelacional',          r'(==|!=|>(?!=)|<(?!=)|>=|<=)'),
         ('saltoDeLinea',                r'\n'),
         ('espacioenblanco',             r'[ \t]+'),
-        ('comentario',                  r'(//[\w\d ]*|/\*[\w\d \n]+\*/)'),
+        ('comentario',                  r'\/\*(\*(?!\/)|[^*])*\*\/|\/\/.*'),
         ('simbolo',                     r'(,|\(|\)|\[|\])|;|\{|\}|\.'),
         ('numero',                      r'\d+(\.d*)?'),
         ('cadena',                      r'\"[\w\d ]*\"'),
@@ -54,7 +54,11 @@ class Lexico():
         siguienteToken = self.tokens[0][0]
         tipoToken = self.tokens[0][1]
         if tipoToken == "ID":
-            return "id"
+            return "ID"
+        elif tipoToken == "numero" \
+            or tipoToken == "cadena" \
+            or tipoToken == "caracter":
+            return "VALOR"
         return siguienteToken
 
     def sacarSimbolo(self):
