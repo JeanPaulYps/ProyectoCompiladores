@@ -4,7 +4,11 @@ from Analizador import Analizador
 
 app = Flask(__name__)
 
-@app.route('/',methods=['GET','POST'])
+@app.route('/',methods=['GET'])
+def inicioPagina():
+    return render_template("inicio.html")
+
+@app.route('/lexico',methods=['GET','POST'])
 def enviarPagina():
     if request.method == "POST":
         codigo = request.form['codigo']
@@ -13,7 +17,7 @@ def enviarPagina():
     else:
         return render_template("inicio_lexico.html")
 
-@app.route('/analizador',methods=['GET','POST'])
+@app.route('/sintactico',methods=['GET','POST'])
 def analizador():
     if request.method == "POST":
         codigo = request.form['codigo']
