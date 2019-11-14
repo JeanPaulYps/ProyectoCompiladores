@@ -70,8 +70,8 @@ class Analizador ():
             if siguienteToken == "$" and cimaDePila == "$":
                 accion = "ACEPTAR"
                 print("ACEPTAR")
-            self.estados.append(( " ".join(pila) ,siguienteToken, accion))
-            #self.estados.append(( " ".join(pila) ,simbolos, accion))
+            #self.estados.append(( " ".join(pila) ,siguienteToken, accion))
+            self.estados.append(( " ".join(pila) ,simbolos, accion))
     
 
     @staticmethod
@@ -79,7 +79,7 @@ class Analizador ():
         return produccion.split(" ")[::-1]
 
 
-"""
+
 f = open ('prueba.txt','r')
 entrada = f.read()
 f.close()
@@ -94,5 +94,5 @@ a.analizar()
 f2 = open("salida.txt", "w")
 for i1,i2,i3 in a.estados:
    f2.write("{}\t{}\t{}\n".format(i1,i2,i3))
-f2.close()"""
+f2.close()
 
