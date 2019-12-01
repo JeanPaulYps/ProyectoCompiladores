@@ -1,11 +1,11 @@
 import re
+from Token import Token
 
 """
 Analizador lexico del lenguaje
 """
 
 class Lexico():
-    tablaDeSimbolos = []
     palabrasReservadas = ["si","sino","sinosi","para","mientras","vacio","main",
                           "importar","real","cadena","bool","caracter","leer",
                           "imprimir","clase","entero","verdadero","falso", "retornar"]
@@ -27,7 +27,7 @@ class Lexico():
 
     def __init__(self, codigo):
         self.tokens = self.obtenerTokens(codigo)
-        self.tokens.append(("$", "EOF"))
+        self.tokens.append(Token("$", "EOF"))
 
     def obtenerTokensRegex (self):
         return '|'.join('(?P<%s>%s)' % pair for pair in self.patronesTokens)
@@ -45,24 +45,37 @@ class Lexico():
             else:
                 if tipo == "ID" and valor in self.palabrasReservadas:
                     tipo = "palabraReservada"
-                elif tipo == "ID" and valor not in self.tablaDeSimbolos:
-                    self.tablaDeSimbolos.append(valor)
-                tokens.append((valor,tipo))
+                if tipo == "numero":
+                    if "." in valor:
+                        tipo = "real"
+                    else:
+                        tipo = "entero"
+                tokens.append(Token(valor,tipo))
         return tokens
 
     def verSiguienteSimbolo(self):
-        siguienteToken = self.tokens[0][0]
-        tipoToken = self.tokens[0][1]
-        if tipoToken == "ID":
+        token = self.tokens[0]
+        if token.tipo == "ID":
             return "ID"
-        elif tipoToken == "numero" \
-            or tipoToken == "cadena" \
-            or tipoToken == "caracter":
+        elif token.tipo == "entero" \
+            or token.tipo == "real" \
+            or token.tipo == "cadena" \
+            or token.tipo == "caracter":
             return "VALOR"
-        return siguienteToken
+        return token.valor
 
     def sacarSimbolo(self):
         return self.tokens.pop(0)
 
     def obtenerPilaSimbolos(self):
-        return [token[0] for token in self.tokens]
+        return [token.valor for token in self.tokens]
+
+f = open ('prueba.txt','r')
+entrada = f.read()
+f.close()
+lexico = Lexico(entrada)
+
+for i in lexico.tokens:
+    print(i)
+
+print(lexico.verSiguienteSimbolo())

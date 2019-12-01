@@ -23,7 +23,41 @@ class Analizador ():
             return lista.index(simbolo)
         except:
             return -1
-            
+
+    def hayQueEliminarToken(self, cimaDePila):
+        siguienteToken = self.lexico.verSiguienteSimbolo()
+        return  siguienteToken == cimaDePila
+
+    def eliminarToken(self):
+        self.pila.pop(-1)
+        self.lexico.sacarSimbolo()
+
+    def existeProduccion(self, cimaDePila):
+        return cimaDePila in self.producciones
+
+
+    def derivar (self, cimaDePila):
+        siguienteToken = self.lexico.verSiguienteSimbolo()
+        fila = self.obtenerIndice(cimaDePila, self.producciones)
+        columna = self.obtenerIndice(siguienteToken, self.terminales)
+        produccion = self.tabla[fila][columna]
+        accion = "{} -> {}".format(cimaDePila, produccion)
+        self.pila.pop(-1)
+        if produccion != "?":
+            for simbolo in self.obtenerSimbolos(produccion): 
+                self.pila.append(simbolo)
+        return accion
+
+    def sePuedeDerivar (self, cimaDePila):
+        siguienteToken = self.lexico.verSiguienteSimbolo()
+        fila = self.obtenerIndice(cimaDePila, self.producciones)
+        columna = self.obtenerIndice(siguienteToken, self.terminales)
+        if fila == -1 or columna == -1:
+            return False
+        produccion = self.tabla[fila][columna]  
+        if not produccion:
+            return False
+        return True
 
     def analizar(self):
         self.estados = []
@@ -37,35 +71,14 @@ class Analizador ():
             siguienteToken = self.lexico.verSiguienteSimbolo()
             cimaDePila = self.pila[-1]
             accion = ""
-            if siguienteToken == cimaDePila:
-                self.pila.pop(-1)
-                self.lexico.sacarSimbolo()
-            elif cimaDePila in self.producciones:
-                fila = self.obtenerIndice(cimaDePila, self.producciones)
-                columna = self.obtenerIndice(siguienteToken, self.terminales)
-                if fila == -1 or columna == -1:
-                    print(siguienteToken)
-                    self.estados.append((pila,siguienteToken, "Error token desconocido"))
-                    #Este error es de un token desconocido
-                    print("Error token desconocido")
-                    break
-                produccion = self.tabla[fila][columna]
-                accion = "{} -> {}".format(cimaDePila, produccion)
-                self.pila.pop(-1)
-                if not produccion:
-                    print(siguienteToken)
-                    self.estados.append((pila,siguienteToken, "Error simbolo no esperado"))
-                    print("ERROR 2")
-                    #Este es un error de sintaxis, se espera un token distinto al que esta leyendo
-                    break
-                if produccion != "?":
-                    for simbolo in self.obtenerSimbolos(produccion): 
-                        self.pila.append(simbolo)
+            if self.hayQueEliminarToken(cimaDePila):
+                self.eliminarToken()
+            elif self.existeProduccion(cimaDePila) and self.sePuedeDerivar(cimaDePila):
+                accion = self.derivar(cimaDePila)
             else:
                 print(siguienteToken)
                 self.estados.append((pila,simbolos, "ERROR"))
-                print("ERROR 3")
-                #Este seria un error de digitacion en la tabla TAS
+                print("Error de sintaxis")
                 break
             if siguienteToken == "$" and cimaDePila == "$":
                 accion = "ACEPTAR"
