@@ -19,7 +19,7 @@ class Lexico():
         ('espacioenblanco',             r'[ \t]+'),
         ('comentario',                  r'\/\*(\*(?!\/)|[^*])*\*\/|\/\/.*'),
         ('simbolo',                     r'(,|\(|\)|\[|\])|;|\{|\}|\.'),
-        ('numero',                      r'\d+(\.d*)?'),
+        ('numero',                      r'\d+(\.\d+)?'),
         ('cadena',                      r'\"[\w\d ]*\"'),
         ('caracter',                    r'\"[\w\d ]?\"'),
         ('DESCONOCIDO',                 r'.'),
