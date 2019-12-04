@@ -4,7 +4,7 @@ class Analizador ():
     def __init__(self, tablaTAS,lexico):
         self.tabla = tablaTAS
         self.terminales = tablaTAS[0][:]
-        self.producciones = [fila[0] for fila in tablaTAS]
+        self.producciones = [ str.strip(fila[0]) for fila in tablaTAS]
         self.lexico = lexico
         self.pila = ["$", "<S>"]
 
@@ -65,7 +65,7 @@ class Analizador ():
         cimaDePila = self.pila[-1]
         accion = ""
         while siguienteToken != "$" or cimaDePila != "$":
-            #print("{}\t\t{}".format(self.pila,self.lexico.obtenerPilaSimbolos()))
+            print("{}\t\t{}".format(self.pila,self.lexico.obtenerPilaSimbolos()))
             pila = self.pila[:]
             simbolos = self.lexico.obtenerPilaSimbolos()
             siguienteToken = self.lexico.verSiguienteSimbolo()
@@ -76,7 +76,7 @@ class Analizador ():
             elif self.existeProduccion(cimaDePila) and self.sePuedeDerivar(cimaDePila):
                 accion = self.derivar(cimaDePila)
             else:
-                print(siguienteToken)
+                print(siguienteToken, cimaDePila, self.sePuedeDerivar(cimaDePila))
                 self.estados.append((pila,simbolos, "ERROR"))
                 print("Error de sintaxis")
                 break
@@ -93,13 +93,10 @@ class Analizador ():
 
 
 
-f = open ('prueba.txt','r')
+"""f = open ('prueba.txt','r')
 entrada = f.read()
 f.close()
 lexico = Lexico(entrada)
-
-for i in lexico.tokens:
-    print(i)
 
 a = Analizador(Analizador.leerTablaTAS("tablaTAS.csv"), lexico)
 a.analizar()
@@ -108,4 +105,4 @@ f2 = open("salida.txt", "w")
 for i1,i2,i3 in a.estados:
    f2.write("{}\t{}\t{}\n".format(i1,i2,i3))
 f2.close()
-
+"""

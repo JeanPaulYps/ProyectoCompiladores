@@ -63,19 +63,12 @@ class Lexico():
             or token.tipo == "caracter":
             return "VALOR"
         return token.valor
+    
+    def verSiguienteToken(self):
+        return self.tokens[0]
 
     def sacarSimbolo(self):
         return self.tokens.pop(0)
 
     def obtenerPilaSimbolos(self):
         return [token.valor for token in self.tokens]
-
-f = open ('prueba.txt','r')
-entrada = f.read()
-f.close()
-lexico = Lexico(entrada)
-
-for i in lexico.tokens:
-    print(i)
-
-print(lexico.verSiguienteSimbolo())
