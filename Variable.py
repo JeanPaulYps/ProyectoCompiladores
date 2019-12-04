@@ -6,6 +6,9 @@ class Variable (Simbolo):
     self.tipo = tipo
     self.valor = None
 
+  def __str__(self):
+    return f"{self.nombre} {self.tipo} {self.valor}"
+
   def verificarTipo(self, tipoEntrada):
     return self.tipo == tipoEntrada
 

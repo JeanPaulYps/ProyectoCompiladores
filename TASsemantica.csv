@@ -13,7 +13,7 @@
           <retorno>|||||||||||||||||<valor> ;|<valor> ;||||<valor> ;|||||||||||||||||||;|<valor> ;|<valor> ;
              <main>|||{crearAlcance} main ( ) { <cuerpoMain>||||||||||||||||||||||||||||||||||||||||
        <cuerpoMain>||||<cuerpo> <cuerpoMain>|||<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>||<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>||||||||} {borrarAlcance} {fin}|||||||||||||||||||<cuerpo> <cuerpoMain>
-           <cuerpo>||||<si>|||<para>|<mientras>|<lectura>|<impresion>||<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|||||||||||||||||||||||||||ID <asignacion> ;
+           <cuerpo>||||<si>|||<para>|<mientras>|<lectura>|<impresion>||<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|||||||||||||||||||||||||||ID {push} <asignacion> {asignar} ;
        <asignacion>||||||||||||||||||||[ <valor> ] = <valor>|||||= <valor>|||||||||||||||. ID <elementosObjeto>|||ID ( <constructor>
   <elementosObjeto>||||||||||||||||||||||( <constructor>|||= <valor>||||||||||||||||||
         <impresion>||||||||||imprimir -> <valor> ;|||||||||||||||||||||||||||||||||
@@ -34,7 +34,7 @@
   <otroConstructor>|||||||||||||||||||||||)||||||||||||||||, <valor> <otroConstructor>||||
         <operacion>||||||||||||||||||||?|?||?|?|?|%% <valor>|+ <valor>|- <valor>|* <valor>|/ <valor>|?|?|?|?|?|?|?|?|?||?||
          <tipoDato>||||||||||||entero {push}|real {push}|caracter {push}|cadena {push}|bool {push}|||||||||||||||||||||||||||
-            <valor>|||||||||||||||||verdadero|falso||||( <tiposValor> <operacion> ) <operacion>||||||||||||||||||||<tiposValor> <operacion>|<tiposValor> <operacion>
-       <tiposValor>||||||||||||||||||||||||||||||||||||||||||VALOR|ID <elementosValor>
+            <valor>|||||||||||||||||verdadero {push}|falso {push}||||( <tiposValor> <operacion> ) <operacion>||||||||||||||||||||<tiposValor> <operacion>|<tiposValor> <operacion>
+       <tiposValor>||||||||||||||||||||||||||||||||||||||||||VALOR {push}|ID {push} <elementosValor>
    <elementosValor>||||||||||||||||||||?|?||?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|?|. ID|?||
         <otroValor>||||||||||||||||||||||||}|||||||||||||||, <valor> <otroValor>||||

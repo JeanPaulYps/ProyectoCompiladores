@@ -1,6 +1,7 @@
 from Triplete import Triplete
 from TablaDeSimbolos import TablaDeSimbolos
 from Variable import Variable
+from Token import Token
 """
 def generarTripletes(funcion):
   def agregarTriplete(*args, **kwargs):
@@ -26,8 +27,56 @@ def restar (operando1, operando2):
 def verificarTipo (tipoEsperado, tipoDeVariable):
   return tipoEsperado == tipoDeVariable"""
 
+def tieneValor(simbolo):
+  if isinstance(simbolo, Token):
+    if simbolo.valor == "verdadero" or \
+      simbolo.valor == "falso" or \
+      simbolo.tipo == "entero" or \
+      simbolo.tipo == "real"  or\
+      simbolo.tipo == "cadena"  or\
+      simbolo.tipo == "caracter" :
+      return True
+  elif isinstance(simbolo, Variable):
+    return simbolo.valor
+
+
+def obtenerTipo (simbolo):
+  if isinstance(simbolo, Token):
+    return simbolo.tipo
+  elif isinstance(simbolo, Variable):
+    return simbolo.tipo
+  else:
+    raise NameError("No se puede obtener tipo")
+
+def obtenerValor (simbolo):
+  if isinstance(simbolo, Token):
+    return simbolo.valor
+  elif isinstance(simbolo, Variable):
+    return simbolo.valor
+  else:
+    raise NameError("No se puede obtener valor")
+
+
+def verificarTipo (tipoEsperado, tipoDeVariable):
+  tipoV = obtenerTipo(tipoDeVariable)
+  tipoE = obtenerTipo(tipoEsperado)
+  print(f"tipoV: {tipoV} tipoE: {tipoE} ")
+  if tipoE == "real" and tipoV == "entero":
+    return True
+  return tipoE == tipoV
+
+
 def obtenerTablaActual (semantico):
   return semantico.tablaDeSimbolosActual
+
+def determinarSimbolo(semantico, token):
+  if tieneValor(token):
+    return token
+  elif token.tipo == "ID":
+    tabla =obtenerTablaActual(semantico)
+    return  tabla.buscarSimbolo(token.valor)
+  else:
+    raise NameError("No se puede obtener valor") 
 
 def crearAlcance (semantico):
   tabla = obtenerTablaActual(semantico)
@@ -65,6 +114,24 @@ def crearVariable (semantico):
   tabla.agregarSimbolo(variable)
   Triplete("crearVariable", tipo.valor, token.valor)
 
+def asignar (semantico):
+  tabla = obtenerTablaActual(semantico)
+  tokenValor = pop(semantico)
+  tokenVariable = pop(semantico)
+  valor = determinarSimbolo(semantico, tokenValor)
+  variable = determinarSimbolo(semantico, tokenVariable)
+  print(f"tipoValor {type(valor)} tipoVariable {type(variable)}")
+  if not variable:
+    raise NameError("No existe simbolo")
+  if verificarTipo(variable, valor):
+    variable.valor = True
+    Triplete("asignar", tokenVariable.valor, tokenValor.valor)
+  else:
+    raise NameError("No se puede asignar ese valor")
+  print(str(tabla.buscarSimbolo(variable.nombre)))
+  
+
+
 
 
 reglas = {"crearAlcance": crearAlcance,
@@ -73,6 +140,6 @@ reglas = {"crearAlcance": crearAlcance,
           "fin": fin,
           "push": push,
           "pop": pop,
-          "crearVariable": crearVariable
-
+          "crearVariable": crearVariable,
+          "asignar": asignar
         }

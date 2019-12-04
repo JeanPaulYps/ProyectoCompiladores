@@ -25,7 +25,7 @@ def crearVariable (interprete, triplete):
   tabla = obtenerTablaActual(interprete)
   variable = Variable(valor, tipo)
   tabla.agregarSimbolo(variable)
-  
+
 
 accion = {"crearAlcance": crearAlcance,
           "borrarAlcance": borrarAlcance,
