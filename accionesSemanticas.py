@@ -1,3 +1,4 @@
+import re
 from Triplete import Triplete
 from TablaDeSimbolos import TablaDeSimbolos
 from Variable import Variable
@@ -28,6 +29,7 @@ def verificarTipo (tipoEsperado, tipoDeVariable):
   return tipoEsperado == tipoDeVariable"""
 
 def tieneValor(simbolo):
+  print(f"{simbolo}")
   if isinstance(simbolo, Token):
     if simbolo.valor == "verdadero" or \
       simbolo.valor == "falso" or \
@@ -42,6 +44,12 @@ def tieneValor(simbolo):
 
 def obtenerTipo (simbolo):
   if isinstance(simbolo, Token):
+    if simbolo.tipo == "cadena" and \
+      re.fullmatch(r'\"[\w\d ]?\"', simbolo.valor):
+      return "caracter"
+    if simbolo.valor == "verdadero" or \
+      simbolo.valor == "falso":
+      return "bool"
     return simbolo.tipo
   elif isinstance(simbolo, Variable):
     return simbolo.tipo
@@ -62,6 +70,8 @@ def verificarTipo (tipoEsperado, tipoDeVariable):
   tipoE = obtenerTipo(tipoEsperado)
   print(f"tipoV: {tipoV} tipoE: {tipoE} ")
   if tipoE == "real" and tipoV == "entero":
+    return True
+  if tipoE == "cadena" and tipoV == "caracter":
     return True
   return tipoE == tipoV
 
@@ -125,7 +135,10 @@ def asignar (semantico):
     raise NameError("No existe simbolo")
   if verificarTipo(variable, valor):
     variable.valor = True
-    Triplete("asignar", tokenVariable.valor, tokenValor.valor)
+    if tieneValor(valor):
+      Triplete("asignar", tokenVariable.valor, tokenValor.valor)
+    else:
+      raise NameError("No tiene valor")
   else:
     raise NameError("No se puede asignar ese valor")
   print(str(tabla.buscarSimbolo(variable.nombre)))
