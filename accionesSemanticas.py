@@ -43,6 +43,10 @@ def obtenerTipo (simbolo):
     if simbolo.tipo == "cadena" and \
       re.fullmatch(r'\"[\w\d ]?\"', simbolo.valor):
       return "caracter"
+    if simbolo.tipo == "numero":
+      if "." in simbolo.valor:
+        return "real"
+      return "entero"
     if simbolo.valor == "verdadero" or \
       simbolo.valor == "falso":
       return "bool"
@@ -77,17 +81,20 @@ def obtenerTablaActual (semantico):
   return semantico.tablaDeSimbolosActual
 
 def determinarSimbolo(semantico, simbolo):
-  if simbolo.tipo == "ID":
-    tabla = obtenerTablaActual(semantico)
-    variable = tabla.buscarSimbolo(simbolo.valor)
-    if variable:
-      return variable
-    else:
-      raise ValueError(f"Simbolo {simbolo.valor} no existe")
-  elif tieneValor(simbolo) or esTriplete(simbolo):
+  if esToken(simbolo):
+    if simbolo.tipo == "ID":
+      tabla = obtenerTablaActual(semantico)
+      variable = tabla.buscarSimbolo(simbolo.valor)
+      if variable:
+        return variable
+      else:
+        raise ValueError(f"Simbolo {simbolo.valor} no existe")
+    elif tieneValor(simbolo):
+      return simbolo
+  elif esTriplete(simbolo):
     return simbolo
   else:
-    raise NameError("No se puede obtener valor") 
+    raise NameError(f"No se puede obtener valor de {simbolo}") 
 
 def crearAlcance (semantico):
   tabla = obtenerTablaActual(semantico)
@@ -221,54 +228,47 @@ def obtenerValorParaOperar(operando):
   elif esTriplete(operando):
     return operando
 
-def sumar (semantico):
-  operando1 = obtenerOperando(semantico, pop(semantico))
-  operando2 = obtenerOperando(semantico, pop(semantico))
-  if verificarTipo(operando1, operando2):
-    resultado = obtenerResultadoMat(operando1, operando2)
-    op1 = obtenerValorParaOperar(operando1)
-    op2 = obtenerValorParaOperar(operando2)
-    t = Triplete("sumar", op1, op2, resultado)
-    semantico.pilaSemantica.append(t)
+def esOperacionMatematica (operando1, operando2):
+  tipoOp1 = obtenerTipo(operando1)
+  tipoOp2 = obtenerTipo(operando2)
+  if tipoOp1 == "real" or tipoOp1 == "entero" or \
+    tipoOp2 == "real" or tipoOp2 == "entero":
+    return True
   else:
-    raise TypeError("No son compatibles")
+    return False
 
-def restar (semantico):
-  operando1 = obtenerOperando(semantico, pop(semantico))
-  operando2 = obtenerOperando(semantico, pop(semantico))
-  if verificarTipo(operando1, operando2):
-    resultado = obtenerResultadoMat(operando1, operando2)
-    op1 = obtenerValorParaOperar(operando1)
-    op2 = obtenerValorParaOperar(operando2)
-    t = Triplete("restar", op1, op2, resultado)
-    semantico.pilaSemantica.append(t)
-  else:
-    raise TypeError("No son compatibles")
+def verificarOperadoresMatematicos (funcion):
+  def verificarOperadores(semantico):
+    print("LLEGUE")
+    operando1 = obtenerOperando(semantico, pop(semantico))
+    operando2 = obtenerOperando(semantico, pop(semantico))
+    if esOperacionMatematica(operando1, operando2):
+      resultado = obtenerResultadoMat(operando1, operando2)
+      op1 = obtenerValorParaOperar(operando1)
+      op2 = obtenerValorParaOperar(operando2)
+      triplete = funcion(op1, op2, resultado)
+      semantico.pilaSemantica.append(triplete)
+    else:
+      raise TypeError(f"{operando1} y {operando2} no son compatibles")
+  return verificarOperadores
 
-def multiplicar (semantico):
-  operando1 = obtenerOperando(semantico, pop(semantico))
-  operando2 = obtenerOperando(semantico, pop(semantico))
-  if verificarTipo(operando1, operando2):
-    resultado = obtenerResultadoMat(operando1, operando2)
-    op1 = obtenerValorParaOperar(operando1)
-    op2 = obtenerValorParaOperar(operando2)
-    t = Triplete("multiplicar", op1, op2, resultado)
-    semantico.pilaSemantica.append(t)
-  else:
-    raise TypeError("No son compatibles")
 
-def dividir (semantico):
-  operando1 = obtenerOperando(semantico, pop(semantico))
-  operando2 = obtenerOperando(semantico, pop(semantico))
-  if verificarTipo(operando1, operando2):
-    resultado = obtenerResultadoMat(operando1, operando2)
-    op1 = obtenerValorParaOperar(operando1)
-    op2 = obtenerValorParaOperar(operando2)
-    t = Triplete("dividir", op1, op2, resultado)
-    semantico.pilaSemantica.append(t)
-  else:
-    raise TypeError("No son compatibles")
 
+@verificarOperadoresMatematicos
+def sumar (op1, op2, resultado):
+  return Triplete("sumar", op1, op2, resultado)
+
+@verificarOperadoresMatematicos
+def restar (op1, op2, resultado):
+  return Triplete("restar", op1, op2, resultado)
+
+@verificarOperadoresMatematicos
+def multiplicar (op1, op2, resultado):
+  return Triplete("multiplicar", op1, op2, resultado)
+
+@verificarOperadoresMatematicos
+def dividir (op1, op2, resultado):
+  return Triplete("dividir", op1, op2, resultado)
 
 def esIgual (semantico):
   operando1 = obtenerOperando(semantico, pop(semantico))
