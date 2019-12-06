@@ -71,10 +71,7 @@ def verificarTipo (tipoEsperado, tipoDeVariable):
     return True
   if tipoE == "cadena" and tipoV == "caracter":
     return True
-    
   return tipoE == tipoV
-
-
 
 def obtenerTablaActual (semantico):
   return semantico.tablaDeSimbolosActual
@@ -177,27 +174,30 @@ def verificacionTiposAsignacion(funcion):
 
 ##Hasta aqui la verificacion
 
+def existeVariable(funcion):
+  def existeVar(semantico):
+    tabla = obtenerTablaActual(semantico)
+    tokenVariable = pop(semantico)
+    variable = determinarSimbolo(semantico, tokenVariable)
+    if not Variable:
+      raise NameError(f"No existe variable {variable}")
+    else:
+      return funcion(variable)
+  return existeVar
+
 @verificacionTiposAsignacion
 def asignar(variable, valor):
   Triplete("asignar", variable, valor)
-  
-def imprimir (semantico):
-  tabla = obtenerTablaActual(semantico)
-  tokenVariable = pop(semantico)
-  variable = determinarSimbolo(semantico, tokenVariable)
-  if not variable:
-    raise NameError("No existe simbolo")
+
+@existeVariable
+def imprimir (variable):
   if variable.valor:
     Triplete("imprimir", variable.nombre, None)
   else:
-    raise  NameError("Esa variable no tiene dato")
+    raise NameError(f"La variable {variable.nombre} no tiene dato")
 
-def leer (semantico):
-  tabla = obtenerTablaActual(semantico)
-  tokenVariable = pop(semantico)
-  variable = determinarSimbolo(semantico, tokenVariable)
-  if not variable:
-    raise NameError("No existe simbolo")
+@existeVariable
+def leer (variable):
   variable.valor = True
   t = Triplete("leer", variable.nombre, None)
   Triplete("asignar", variable.nombre, t)
