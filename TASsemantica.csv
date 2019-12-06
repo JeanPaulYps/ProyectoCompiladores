@@ -1,4 +1,4 @@
-|importar|clase|main|si|sinosi|sino|para|mientras|leer|imprimir|vacio|entero|real|caracter|cadena|bool|VERDADERO|FALSO|retornar|[|]|(|)|}|=|%%|+|-|*|/|&&|"||"|==|!=|>|<|>=|<=|,|.|;|VALOR|ID
+|importar|clase|main|si|sinosi|sino|para|mientras|leer|imprimir|vacio|entero|real|caracter|cadena|bool|verdadero|falso|retornar|[|]|(|)|}|=|%%|+|-|*|/|&&|"||"|==|!=|>|<|>=|<=|,|.|;|VALOR|ID
                 <S>|{inicio} <libreria>|{inicio} <clase>|{inicio} <main>||||||||{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|||||||||||||||||||||||||||
          <libreria>|importar ID ; <libreria>|<clase>|<main>||||||||<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|||||||||||||||||||||||||||
             <clase>||clase ID ( <argumento> { <cuerpoClase> <clase>|<main>||||||||<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|||||||||||||||||||||||||||
@@ -12,7 +12,7 @@
        <cuerpoFunc>||||<cuerpo> <cuerpoFunc>|||<cuerpo> <cuerpoFunc>|<cuerpo> <cuerpoFunc>|<cuerpo> <cuerpoFunc>|<cuerpo> <cuerpoFunc>||<cuerpo> <cuerpoFunc>|<cuerpo> <cuerpoFunc>|<cuerpo> <cuerpoFunc>|<cuerpo> <cuerpoFunc>|<cuerpo> <cuerpoFunc>|||retornar <retorno> }|||||}|||||||||||||||||||<cuerpo> <cuerpoFunc>
           <retorno>|||||||||||||||||<valor> ;|<valor> ;||||<valor> ;|||||||||||||||||||;|<valor> ;|<valor> ;
              <main>|||{crearAlcance} main ( ) { <cuerpoMain>||||||||||||||||||||||||||||||||||||||||
-       <cuerpoMain>||||<cuerpo> <cuerpoMain>|||<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>||<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>||||||||} {borrarAlcance} {fin}|||||||||||||||||||<cuerpo> <cuerpoMain>
+       <cuerpoMain>||||<cuerpo> <cuerpoMain>|||<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>||<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>|<cuerpo> <cuerpoMain>||||||||} {borrarAlcance}|||||||||||||||||||<cuerpo> <cuerpoMain>
            <cuerpo>||||<si>|||<para>|<mientras>|<lectura>|<impresion>||<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|||||||||||||||||||||||||||ID {push} <asignacion> {asignar} ;
        <asignacion>||||||||||||||||||||[ <valor> ] = <valor>|||||= <valor>|||||||||||||||. ID <elementosObjeto>|||ID ( <constructor>
   <elementosObjeto>||||||||||||||||||||||( <constructor>|||= <valor>||||||||||||||||||
@@ -21,15 +21,15 @@
          <mientras>||||||||mientras ( <valor> <condicion> { <cuerpoMain>|||||||||||||||||||||||||||||||||||
              <para>|||||||para ( ID = <valor> ; ID <condicionPara> ; ID = <valor> ) { <cuerpoMain>||||||||||||||||||||||||||||||||||||
     <condicionPara>|||||||||||||||||||||||||||||||||== <valor>|!= <valor>|> <valor>|< <valor>|>= <valor>|<= <valor>|||||
-               <si>||||si ( <valor> <condicion> { <cuerpoMain> <otroSi>|||||||||||||||||||||||||||||||||||||||
+               <si>||||{crearAlcance} si ( <valor> <condicion> { <cuerpoMain> <otroSi>|||||||||||||||||||||||||||||||||||||||
            <otroSi>|||?|?|sinosi ( <valor> <condicion> { <cuerpoMain> <otroSi>|sino { <cuerpoMain>|?|?|?|?|?|?|?|?|?|?|||?|||||?|||||||||||||||||||?
          <variable>||||||||||||||||||||[ <vector> ;|||||= <valor> <otraVariable>||||||||||||||<otraVariable>||<otraVariable>||
      <otraVariable>|||||||||||||||||||||||||||||||||||||||{crearVariable} , ID {push} <variable>||{crearVariable} {pop} ;||
            <vector>|||||||||||||||||<valor> ]|<valor> ]|||] = { <valor> <otroValor>|<valor> ]||||||||||||||||||||<valor> ]|<valor> ]
         <argumento>||||||||||||<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|||||||)||||||||||||||||||||
          <listaArg>|||||||||||||||||||||||)||||||||||||||||, <tipoDato> ID <listaArg>||||
-        <condicion>|||||||||||||||||||||||||||||||||== <valor> <otraCondicion>|!= <valor> <otraCondicion>|> <valor> <otraCondicion>|< <valor> <otraCondicion>|>= <valor> <otraCondicion>|<= <valor> <otraCondicion>|||||
-    <otraCondicion>|||||||||||||||||||||||)||||||||&& <valor> <condicion>|"|| <valor> <condicion>"|||||||||||
+        <condicion>|||||||||||||||||||||||||||||||||== <valor> {esIgual} <otraCondicion>|!= <valor> <otraCondicion>|> <valor> <otraCondicion>|< <valor> <otraCondicion>|>= <valor> <otraCondicion>|<= <valor> <otraCondicion>|||||
+    <otraCondicion>|||||||||||||||||||||||) {pop}||||||||&& <valor> <condicion>|"|| <valor> <condicion>"|||||||||||
       <constructor>|||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>||||<valor> <otroConstructor>|)|||||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>
   <otroConstructor>|||||||||||||||||||||||)||||||||||||||||, <valor> <otroConstructor>||||
         <operacion>||||||||||||||||||||?|?||?|?|?|%% <valor>|+ <valor> {sumar}|- <valor> {restar}|* <valor> {multiplicar}|/ <valor> {dividir}|?|?|?|?|?|?|?|?|?||?||

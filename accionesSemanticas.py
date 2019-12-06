@@ -3,30 +3,7 @@ from Triplete import Triplete
 from TablaDeSimbolos import TablaDeSimbolos
 from Variable import Variable
 from Token import Token
-"""
-def generarTripletes(funcion):
-  def agregarTriplete(*args, **kwargs):
-    res = funcion(*args)
-    if res:
-      argumento1, argumento2 = args
-      Triplete((funcion.__name__,  argumento1, argumento2 ), res)
-      return True
-    else:
-      return False
 
-  return agregarTriplete
-
-@generarTripletes
-def sumar (operando1, operando2):
-  return operando1 + operando2
-
-@generarTripletes
-def restar (operando1, operando2):
-  return operando1 - operando2
-
-@generarTripletes
-def verificarTipo (tipoEsperado, tipoDeVariable):
-  return tipoEsperado == tipoDeVariable"""
 
 def esTriplete(simbolo):
   return isinstance(simbolo, Triplete)
@@ -87,24 +64,27 @@ def obtenerValor (simbolo):
 
 
 def verificarTipo (tipoEsperado, tipoDeVariable):
-  tipoV = obtenerTipo(tipoDeVariable)
   tipoE = obtenerTipo(tipoEsperado)
+  tipoV = obtenerTipo(tipoDeVariable)
+  print(f"TipoEsperado: {tipoE}  TipoVariable {tipoV}")
   if tipoE == "real" and tipoV == "entero":
     return True
   if tipoE == "cadena" and tipoV == "caracter":
     return True
+    
   return tipoE == tipoV
+
 
 
 def obtenerTablaActual (semantico):
   return semantico.tablaDeSimbolosActual
 
-def determinarSimbolo(semantico, token):
-  if tieneValor(token) or esTriplete(token):
-    return token
-  elif token.tipo == "ID":
+def determinarSimbolo(semantico, simbolo):
+  if tieneValor(simbolo) or esTriplete(simbolo):
+    return simbolo
+  elif simbolo.tipo == "ID":
     tabla = obtenerTablaActual(semantico)
-    return tabla.buscarSimbolo(token.valor)
+    return tabla.buscarSimbolo(simbolo.valor)
   else:
     raise NameError("No se puede obtener valor") 
 
@@ -115,7 +95,8 @@ def crearAlcance (semantico):
 
 def borrarAlcance (semantico):
   tabla = obtenerTablaActual(semantico)
-  semantico.tablaDeSimbolosActual = semantico.tablaDeSimbolosActual.padre
+  if tabla.padre:
+    semantico.tablaDeSimbolosActual = semantico.tablaDeSimbolosActual.padre
   del(tabla)
   Triplete("borrarAlcance")
 
@@ -144,25 +125,61 @@ def crearVariable (semantico):
   tabla.agregarSimbolo(variable)
   Triplete("crearVariable", tipo.valor, token.valor)
 
-def asignar (semantico):
-  tabla = obtenerTablaActual(semantico)
-  tokenValor = pop(semantico)
-  tokenVariable = pop(semantico)
-  valor = determinarSimbolo(semantico, tokenValor)
-  variable = determinarSimbolo(semantico, tokenVariable)
-  print(tokenValor)
-  if not variable:
-    raise NameError("No existe simbolo")
-  if verificarTipo(variable, valor):
-    variable.valor = True
-    if tieneValor(valor):
-      Triplete("asignar", tokenVariable.valor, tokenValor.valor)
-    elif esTriplete(tokenValor):
-      Triplete("asignar", tokenVariable.valor, tokenValor)
-    else:
-      raise NameError("No tiene valor")
+##Aqui se hace la verifiacion de tipos para una asignacion 
+
+def obtenerTipoEstricto (simbolo):
+  if esToken(simbolo):
+    if simbolo.tipo == "cadena" and \
+      re.fullmatch(r'\"[\w\d ]?\"', simbolo.valor):
+      return "caracter"
+    if simbolo.valor == "verdadero" or \
+      simbolo.valor == "falso":
+      return "bool"
+    return simbolo.tipo
+  elif esVariable(simbolo):
+    return simbolo.tipo
+  elif esTriplete(simbolo):
+    return simbolo.resultado
   else:
-    raise NameError("No se puede asignar ese valor")
+    raise NameError("No se puede obtener tipo")
+
+
+def verificarTipoEstricto (tipoEsperado, tipoDeVariable):
+  tipoE = obtenerTipoEstricto(tipoEsperado)
+  tipoV = obtenerTipoEstricto(tipoDeVariable)
+  print(f"TipoEsperado: {tipoE}  TipoVariable {tipoV}")
+  if tipoE == "real" and tipoV == "entero":
+    return True
+  if tipoE == "cadena" and tipoV == "caracter":
+    return True
+  return tipoE == tipoV
+
+
+def verificacionTiposAsignacion(funcion):
+  def verificacion(semantico):
+    simbolo1 = pop(semantico)
+    simbolo2 = pop(semantico)
+    valor = determinarSimbolo(semantico, simbolo1)
+    variable = determinarSimbolo(semantico, simbolo2)
+    if not variable:
+      raise ValueError(f"La variable {variable} no existe")
+    if verificarTipoEstricto(variable, valor):
+      variable.valor = True
+      if esTriplete(valor):
+        funcion(variable.nombre, valor)
+      elif tieneValor(valor):
+        funcion(variable.nombre, valor.valor)
+      else:
+        raise ValueError(f"El valor {valor} no se puede asignar")
+    else:
+      raise TypeError(f"El tipo de {variable.nombre} no es compatible con {valor}")
+  return verificacion
+
+##Hasta aqui la verificacion
+
+@verificacionTiposAsignacion
+def asignar(variable, valor):
+  Triplete("asignar", variable, valor)
   
 def imprimir (semantico):
   tabla = obtenerTablaActual(semantico)
@@ -248,8 +265,17 @@ def dividir (semantico):
     raise TypeError("No son compatibles")
 
 
-  
-    
+def esIgual (semantico):
+  operando1 = obtenerOperando(semantico, pop(semantico))
+  operando2 = obtenerOperando(semantico, pop(semantico))
+  if verificarTipo(operando1, operando2):
+    op1 = obtenerValorParaOperar(operando1)
+    op2 = obtenerValorParaOperar(operando2)
+    t = Triplete("esIgual", op1, op2)
+    semantico.pilaSemantica.append(t)
+  else:
+    raise TypeError("No son compatibles")
+
 
 
 
@@ -266,5 +292,6 @@ reglas = {"crearAlcance": crearAlcance,
           "sumar": sumar,
           "restar": restar,
           "multiplicar": multiplicar,
-          "dividir": dividir
+          "dividir": dividir,
+          "esIgual": esIgual
         }

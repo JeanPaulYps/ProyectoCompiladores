@@ -41,7 +41,7 @@ class Semantico (Analizador):
             elif self.esRegla(cimaDePila):
                 regla = self.obtenerRegla(cimaDePila)
                 #reglas[regla]
-                print(regla)
+                #print(self.token, regla)
                 reglas[regla](self)
                 self.pila.pop(-1)
             else:
@@ -51,7 +51,10 @@ class Semantico (Analizador):
                 break
             if siguienteToken == "$" and cimaDePila == "$":
                 accion = "ACEPTAR"
+
                 print("ACEPTAR")
+                reglas["fin"](self)
+            
             #self.estados.append(( " ".join(pila) ,siguienteToken, accion))
             #self.estados.append(( " ".join(pila) ,simbolos, accion))
     

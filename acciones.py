@@ -21,6 +21,18 @@ def obtenerTipoCadena (cadena):
   else:
     return "cadena"
 
+def obtenerValor(simbolo, interprete):
+  print(type(simbolo))
+  if isinstance(simbolo, str):
+    if esID(simbolo):
+      tabla = obtenerTablaActual(interprete)
+      variable = tabla.buscarSimbolo(simbolo)
+      return variable.valor
+    else:
+      return eval(simbolo)
+  if isinstance(simbolo, Triplete):
+      return simbolo.resultado
+
 
 def obtenerValorMatematico(simbolo, interprete):
   print(type(simbolo))
@@ -163,6 +175,12 @@ def dividir (interprete, triplete):
   operador2 = obtenerValorMatematico(triplete.arg2, interprete)
   triplete.resultado = operador2 / operador1
 
+def esIgual (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador1 == operador2
+
+
 accion = {"crearAlcance": crearAlcance,
           "borrarAlcance": borrarAlcance,
           "inicio": inicio,
@@ -174,5 +192,6 @@ accion = {"crearAlcance": crearAlcance,
           "sumar": sumar,
           "restar": restar,
           "multiplicar": multiplicar,
-          "dividir": dividir
+          "dividir": dividir,
+          "esIgual": esIgual
         }
