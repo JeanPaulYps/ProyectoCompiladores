@@ -28,6 +28,25 @@ def restar (operando1, operando2):
 def verificarTipo (tipoEsperado, tipoDeVariable):
   return tipoEsperado == tipoDeVariable"""
 
+def esTriplete(simbolo):
+  return isinstance(simbolo, Triplete)
+
+def esToken(simbolo):
+  return isinstance(simbolo, Token)
+
+def esVariable(simbolo):
+  return isinstance(simbolo, Variable)
+
+def obtenerResultadoMat (simbolo1, simbolo2):
+  tipo1 = obtenerTipo(simbolo1)
+  tipo2 = obtenerTipo(simbolo2)
+  if tipo1 == tipo2:
+    return tipo1
+  else:
+    return "real"
+
+
+
 def tieneValor(simbolo):
   if isinstance(simbolo, Token):
     if simbolo.valor == "verdadero" or \
@@ -41,6 +60,7 @@ def tieneValor(simbolo):
     return simbolo.valor
 
 
+
 def obtenerTipo (simbolo):
   if isinstance(simbolo, Token):
     if simbolo.tipo == "cadena" and \
@@ -52,6 +72,8 @@ def obtenerTipo (simbolo):
     return simbolo.tipo
   elif isinstance(simbolo, Variable):
     return simbolo.tipo
+  elif esTriplete(simbolo):
+    return simbolo.resultado
   else:
     raise NameError("No se puede obtener tipo")
 
@@ -78,7 +100,7 @@ def obtenerTablaActual (semantico):
   return semantico.tablaDeSimbolosActual
 
 def determinarSimbolo(semantico, token):
-  if tieneValor(token):
+  if tieneValor(token) or esTriplete(token):
     return token
   elif token.tipo == "ID":
     tabla = obtenerTablaActual(semantico)
@@ -128,12 +150,15 @@ def asignar (semantico):
   tokenVariable = pop(semantico)
   valor = determinarSimbolo(semantico, tokenValor)
   variable = determinarSimbolo(semantico, tokenVariable)
+  print(tokenValor)
   if not variable:
     raise NameError("No existe simbolo")
   if verificarTipo(variable, valor):
     variable.valor = True
     if tieneValor(valor):
       Triplete("asignar", tokenVariable.valor, tokenValor.valor)
+    elif esTriplete(tokenValor):
+      Triplete("asignar", tokenVariable.valor, tokenValor)
     else:
       raise NameError("No tiene valor")
   else:
@@ -160,6 +185,34 @@ def leer (semantico):
   t = Triplete("leer", variable.nombre, None)
   Triplete("asignar", variable.nombre, t)
 
+def obtenerOperando(semantico, operando):
+  if esToken(operando):
+    return determinarSimbolo(semantico, operando)
+  elif esTriplete(operando):
+    return operando
+
+def obtenerValorParaOperar(operando):
+  if esToken(operando):
+    return operando.valor
+  elif esVariable(operando):
+    return operando.nombre
+  elif esTriplete(operando):
+    return operando
+
+def sumar (semantico):
+  operando1 = obtenerOperando(semantico, pop(semantico))
+  operando2 = obtenerOperando(semantico, pop(semantico))
+  if verificarTipo(operando1, operando2):
+    resultado = obtenerResultadoMat(operando1, operando2)
+    op1 = obtenerValorParaOperar(operando1)
+    op2 = obtenerValorParaOperar(operando2)
+    t = Triplete("sumar", op1, op2, resultado)
+    semantico.pilaSemantica.append(t)
+  else:
+    raise TypeError("No son compatibles")
+
+
+  
     
 
 
@@ -173,5 +226,6 @@ reglas = {"crearAlcance": crearAlcance,
           "crearVariable": crearVariable,
           "asignar": asignar,
           "imprimir": imprimir,
-          "leer": leer
+          "leer": leer,
+          "sumar": sumar
         }

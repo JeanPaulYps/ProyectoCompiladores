@@ -1,4 +1,4 @@
-|importar|clase|main|si|sinosi|sino|para|mientras|leer|imprimir|vacio|entero|real|caracter|cadena|bool|verdadero|falso|retornar|[|]|(|)|}|=|%%|+|-|*|/|&&|"||"|==|!=|>|<|>=|<=|,|.|;|VALOR|ID
+|importar|clase|main|si|sinosi|sino|para|mientras|leer|imprimir|vacio|entero|real|caracter|cadena|bool|VERDADERO|FALSO|retornar|[|]|(|)|}|=|%%|+|-|*|/|&&|"||"|==|!=|>|<|>=|<=|,|.|;|VALOR|ID
                 <S>|{inicio} <libreria>|{inicio} <clase>|{inicio} <main>||||||||{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|{inicio} <funcion>|||||||||||||||||||||||||||
          <libreria>|importar ID ; <libreria>|<clase>|<main>||||||||<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|||||||||||||||||||||||||||
             <clase>||clase ID ( <argumento> { <cuerpoClase> <clase>|<main>||||||||<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|<funcion>|||||||||||||||||||||||||||
@@ -32,7 +32,7 @@
     <otraCondicion>|||||||||||||||||||||||)||||||||&& <valor> <condicion>|"|| <valor> <condicion>"|||||||||||
       <constructor>|||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>||||<valor> <otroConstructor>|)|||||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>
   <otroConstructor>|||||||||||||||||||||||)||||||||||||||||, <valor> <otroConstructor>||||
-        <operacion>||||||||||||||||||||?|?||?|?|?|%% <valor>|+ <valor>|- <valor>|* <valor>|/ <valor>|?|?|?|?|?|?|?|?|?||?||
+        <operacion>||||||||||||||||||||?|?||?|?|?|%% <valor>|+ <valor> {sumar}|- <valor>|* <valor>|/ <valor>|?|?|?|?|?|?|?|?|?||?||
          <tipoDato>||||||||||||entero {push}|real {push}|caracter {push}|cadena {push}|bool {push}|||||||||||||||||||||||||||
             <valor>|||||||||||||||||verdadero {push}|falso {push}||||( <tiposValor> <operacion> ) <operacion>||||||||||||||||||||<tiposValor> <operacion>|<tiposValor> <operacion>
        <tiposValor>||||||||||||||||||||||||||||||||||||||||||VALOR {push}|ID {push} <elementosValor>

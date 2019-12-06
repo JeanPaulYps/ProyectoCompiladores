@@ -21,6 +21,19 @@ def obtenerTipoCadena (cadena):
   else:
     return "cadena"
 
+
+def obtenerValorMatematico(simbolo, interprete):
+  print(type(simbolo))
+  if isinstance(simbolo, str):
+    if esID(simbolo):
+      tabla = obtenerTablaActual(interprete)
+      variable = tabla.buscarSimbolo(simbolo)
+      return variable.valor
+    else:
+      return eval(simbolo)
+  if isinstance(simbolo, Triplete):
+      return simbolo.resultado
+
 def convertir(cadena):
   if re.fullmatch(r"'\d+(\.\d+)?'", cadena):
     if "." in cadena:
@@ -92,7 +105,10 @@ def asignar (interprete, triplete):
   variable = tabla.buscarSimbolo(variable)
   simbolo = triplete.arg2
   if esTriplete(simbolo):
-      variable.valor = simbolo.resultado
+      if variable.tipo == "real":
+        variable.valor = float(simbolo.resultado)
+      else:
+        variable.valor = simbolo.resultado
   elif esID(simbolo):
     otraVariable = tabla.buscarSimbolo(simbolo)
     if variable.tipo == "real" and \
@@ -121,6 +137,17 @@ def leer (interprete, triplete):
     raise TypeError("No son del mismo tipo")
 
 
+
+def sumar (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador1 + operador2
+
+def sumar (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador1 + operador2
+
 accion = {"crearAlcance": crearAlcance,
           "borrarAlcance": borrarAlcance,
           "inicio": inicio,
@@ -128,5 +155,6 @@ accion = {"crearAlcance": crearAlcance,
           "crearVariable": crearVariable,
           "asignar": asignar,
           "imprimir": imprimir,
-          "leer": leer
+          "leer": leer,
+          "sumar": sumar
         }

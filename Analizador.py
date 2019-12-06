@@ -65,7 +65,7 @@ class Analizador ():
         cimaDePila = self.pila[-1]
         accion = ""
         while siguienteToken != "$" or cimaDePila != "$":
-            #print("{}\t\t{}".format(self.pila,self.lexico.obtenerPilaSimbolos()))
+            print("{}\t\t{}".format(self.pila,self.lexico.obtenerPilaSimbolos()))
             pila = self.pila[:]
             simbolos = self.lexico.obtenerPilaSimbolos()
             siguienteToken = self.lexico.verSiguienteSimbolo()
