@@ -77,11 +77,15 @@ def obtenerTablaActual (semantico):
   return semantico.tablaDeSimbolosActual
 
 def determinarSimbolo(semantico, simbolo):
-  if tieneValor(simbolo) or esTriplete(simbolo):
-    return simbolo
-  elif simbolo.tipo == "ID":
+  if simbolo.tipo == "ID":
     tabla = obtenerTablaActual(semantico)
-    return tabla.buscarSimbolo(simbolo.valor)
+    variable = tabla.buscarSimbolo(simbolo.valor)
+    if variable:
+      return variable
+    else:
+      raise ValueError(f"Simbolo {simbolo.valor} no existe")
+  elif tieneValor(simbolo) or esTriplete(simbolo):
+    return simbolo
   else:
     raise NameError("No se puede obtener valor") 
 
@@ -174,6 +178,7 @@ def verificacionTiposAsignacion(funcion):
 
 ##Hasta aqui la verificacion
 
+#Verificar si existe variable en la tabla de datos
 def existeVariable(funcion):
   def existeVar(semantico):
     tabla = obtenerTablaActual(semantico)
