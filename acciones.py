@@ -1,11 +1,41 @@
 from TablaDeSimbolos import TablaDeSimbolos
 from Variable import Variable
+from Triplete import Triplete
 import re
 
 
 palabrasReservadas = ["si","sino","sinosi","para","mientras","vacio","main",
                           "importar","real","cadena","bool","caracter","leer",
                           "imprimir","clase","entero","verdadero","falso", "retornar"]
+
+def obtenerTipoCadena (cadena):
+  if re.fullmatch(r"\d+(\.\d+)?", cadena):
+    if "." in cadena:
+      return "real"
+    else:
+      return "entero"
+  elif cadena == "verdadero":
+    return "bool"
+  elif cadena == "falso":
+    return "bool"
+  else:
+    return "cadena"
+
+def convertir(cadena):
+  if re.fullmatch(r"'\d+(\.\d+)?'", cadena):
+    if "." in cadena:
+      return int(cadena)
+    else:
+      return float(cadena)
+  elif cadena == "verdadero":
+    return cadena
+  elif cadena == "falso":
+    return cadena
+  else:
+    return cadena
+
+def esTriplete (simbolo):
+  return isinstance(simbolo, Triplete)
 
 def esID (simbolo):
   if re.fullmatch(r"[a-zA-Z][\w]*", simbolo) and\
@@ -61,8 +91,9 @@ def asignar (interprete, triplete):
   variable = triplete.arg1
   variable = tabla.buscarSimbolo(variable)
   simbolo = triplete.arg2
-  print(variable, simbolo)
-  if esID(simbolo):
+  if esTriplete(simbolo):
+      variable.valor = simbolo.resultado
+  elif esID(simbolo):
     otraVariable = tabla.buscarSimbolo(simbolo)
     if variable.tipo == "real" and \
       otraVariable.tipo == "entero":
@@ -71,7 +102,23 @@ def asignar (interprete, triplete):
       variable.valor = otraVariable.valor
   else:
     variable.valor = obtenerValor(simbolo)
-  print(variable)
+
+def imprimir (interprete, triplete):
+  tabla = obtenerTablaActual(interprete)
+  variable = triplete.arg1
+  variable = tabla.buscarSimbolo(variable)
+  print(variable.valor)
+
+
+def leer (interprete, triplete):
+  tabla = obtenerTablaActual(interprete)
+  variable = triplete.arg1
+  variable = tabla.buscarSimbolo(variable)
+  entrada = input()
+  if variable.tipo == obtenerTipoCadena(entrada):
+      triplete.resultado = entrada
+  else:
+    raise TypeError("No son del mismo tipo")
 
 
 accion = {"crearAlcance": crearAlcance,
@@ -79,5 +126,7 @@ accion = {"crearAlcance": crearAlcance,
           "inicio": inicio,
           "fin": fin,
           "crearVariable": crearVariable,
-          "asignar": asignar
+          "asignar": asignar,
+          "imprimir": imprimir,
+          "leer": leer
         }

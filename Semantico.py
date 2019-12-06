@@ -41,7 +41,7 @@ class Semantico (Analizador):
             elif self.esRegla(cimaDePila):
                 regla = self.obtenerRegla(cimaDePila)
                 #reglas[regla]
-                #print(regla)
+                print(regla)
                 reglas[regla](self)
                 self.pila.pop(-1)
             else:

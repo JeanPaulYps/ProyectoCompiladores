@@ -29,7 +29,6 @@ def verificarTipo (tipoEsperado, tipoDeVariable):
   return tipoEsperado == tipoDeVariable"""
 
 def tieneValor(simbolo):
-  print(f"{simbolo}")
   if isinstance(simbolo, Token):
     if simbolo.valor == "verdadero" or \
       simbolo.valor == "falso" or \
@@ -68,7 +67,6 @@ def obtenerValor (simbolo):
 def verificarTipo (tipoEsperado, tipoDeVariable):
   tipoV = obtenerTipo(tipoDeVariable)
   tipoE = obtenerTipo(tipoEsperado)
-  print(f"tipoV: {tipoV} tipoE: {tipoE} ")
   if tipoE == "real" and tipoV == "entero":
     return True
   if tipoE == "cadena" and tipoV == "caracter":
@@ -83,8 +81,8 @@ def determinarSimbolo(semantico, token):
   if tieneValor(token):
     return token
   elif token.tipo == "ID":
-    tabla =obtenerTablaActual(semantico)
-    return  tabla.buscarSimbolo(token.valor)
+    tabla = obtenerTablaActual(semantico)
+    return tabla.buscarSimbolo(token.valor)
   else:
     raise NameError("No se puede obtener valor") 
 
@@ -130,7 +128,6 @@ def asignar (semantico):
   tokenVariable = pop(semantico)
   valor = determinarSimbolo(semantico, tokenValor)
   variable = determinarSimbolo(semantico, tokenVariable)
-  print(f"tipoValor {type(valor)} tipoVariable {type(variable)}")
   if not variable:
     raise NameError("No existe simbolo")
   if verificarTipo(variable, valor):
@@ -141,9 +138,29 @@ def asignar (semantico):
       raise NameError("No tiene valor")
   else:
     raise NameError("No se puede asignar ese valor")
-  print(str(tabla.buscarSimbolo(variable.nombre)))
   
+def imprimir (semantico):
+  tabla = obtenerTablaActual(semantico)
+  tokenVariable = pop(semantico)
+  variable = determinarSimbolo(semantico, tokenVariable)
+  if not variable:
+    raise NameError("No existe simbolo")
+  if variable.valor:
+    Triplete("imprimir", variable.nombre, None)
+  else:
+    raise  NameError("Esa variable no tiene dato")
 
+def leer (semantico):
+  tabla = obtenerTablaActual(semantico)
+  tokenVariable = pop(semantico)
+  variable = determinarSimbolo(semantico, tokenVariable)
+  if not variable:
+    raise NameError("No existe simbolo")
+  variable.valor = True
+  t = Triplete("leer", variable.nombre, None)
+  Triplete("asignar", variable.nombre, t)
+
+    
 
 
 
@@ -154,5 +171,7 @@ reglas = {"crearAlcance": crearAlcance,
           "push": push,
           "pop": pop,
           "crearVariable": crearVariable,
-          "asignar": asignar
+          "asignar": asignar,
+          "imprimir": imprimir,
+          "leer": leer
         }

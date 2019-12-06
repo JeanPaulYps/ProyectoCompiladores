@@ -16,8 +16,8 @@
            <cuerpo>||||<si>|||<para>|<mientras>|<lectura>|<impresion>||<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|<tipoDato> ID {push} <variable>|||||||||||||||||||||||||||ID {push} <asignacion> {asignar} ;
        <asignacion>||||||||||||||||||||[ <valor> ] = <valor>|||||= <valor>|||||||||||||||. ID <elementosObjeto>|||ID ( <constructor>
   <elementosObjeto>||||||||||||||||||||||( <constructor>|||= <valor>||||||||||||||||||
-        <impresion>||||||||||imprimir -> <valor> ;|||||||||||||||||||||||||||||||||
-          <lectura>|||||||||leer -> ID ;||||||||||||||||||||||||||||||||||
+        <impresion>||||||||||imprimir -> <valor> {imprimir} ;|||||||||||||||||||||||||||||||||
+          <lectura>|||||||||leer -> ID {push} {leer} ;||||||||||||||||||||||||||||||||||
          <mientras>||||||||mientras ( <valor> <condicion> { <cuerpoMain>|||||||||||||||||||||||||||||||||||
              <para>|||||||para ( ID = <valor> ; ID <condicionPara> ; ID = <valor> ) { <cuerpoMain>||||||||||||||||||||||||||||||||||||
     <condicionPara>|||||||||||||||||||||||||||||||||== <valor>|!= <valor>|> <valor>|< <valor>|>= <valor>|<= <valor>|||||
