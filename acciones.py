@@ -21,19 +21,22 @@ def obtenerTipoCadena (cadena):
   else:
     return "cadena"
 
-def obtenerValor(simbolo, interprete):
+def obtenerValorSimbolo (simbolo, interprete):
   print(type(simbolo))
   if isinstance(simbolo, str):
     if esID(simbolo):
       tabla = obtenerTablaActual(interprete)
       variable = tabla.buscarSimbolo(simbolo)
       return variable.valor
+    if simbolo == "verdadero":
+      return True
+    if simbolo == "falso":
+      return False
     else:
       return eval(simbolo)
   if isinstance(simbolo, Triplete):
       return simbolo.resultado
-
-
+      
 def obtenerValorMatematico(simbolo, interprete):
   print(type(simbolo))
   if isinstance(simbolo, str):
@@ -82,6 +85,8 @@ def obtenerValor (simbolo):
     return simbolo
   elif simbolo == "falso":
     return simbolo
+
+
 
 
 def obtenerTablaActual (interprete):
@@ -150,6 +155,8 @@ def leer (interprete, triplete):
 
 
 
+
+
 def sumar (interprete, triplete):
   operador1 = obtenerValorMatematico(triplete.arg1, interprete)
   operador2 = obtenerValorMatematico(triplete.arg2, interprete)
@@ -176,9 +183,35 @@ def dividir (interprete, triplete):
   triplete.resultado = operador2 / operador1
 
 def esIgual (interprete, triplete):
+  operador1 = obtenerValorSimbolo(triplete.arg1, interprete)
+  operador2 = obtenerValorSimbolo(triplete.arg2, interprete)
+  triplete.resultado = operador1 == operador2
+
+def esDiferente (interprete, triplete):
+  operador1 = obtenerValorSimbolo(triplete.arg1, interprete)
+  operador2 = obtenerValorSimbolo(triplete.arg2, interprete)
+  triplete.resultado = operador1 != operador2
+
+def esMayor (interprete, triplete):
   operador1 = obtenerValorMatematico(triplete.arg1, interprete)
   operador2 = obtenerValorMatematico(triplete.arg2, interprete)
-  triplete.resultado = operador1 == operador2
+  triplete.resultado = operador2 > operador1
+
+def esMayorOigual (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador2 >= operador1
+
+def esMenor (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador2 < operador1
+
+def esMenorOigual (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador2 < operador1
+
 
 
 accion = {"crearAlcance": crearAlcance,
@@ -193,5 +226,10 @@ accion = {"crearAlcance": crearAlcance,
           "restar": restar,
           "multiplicar": multiplicar,
           "dividir": dividir,
-          "esIgual": esIgual
+          "esIgual": esIgual,
+          "esDiferente": esDiferente,
+          "esMayor": esMayor,
+          "esMayorOigual": esMayorOigual,
+          "esMenor": esMenor,
+          "esMenorOigual": esMenorOigual
         }

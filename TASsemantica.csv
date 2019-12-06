@@ -28,7 +28,7 @@
            <vector>|||||||||||||||||<valor> ]|<valor> ]|||] = { <valor> <otroValor>|<valor> ]||||||||||||||||||||<valor> ]|<valor> ]
         <argumento>||||||||||||<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|<tipoDato> ID <listaArg>|||||||)||||||||||||||||||||
          <listaArg>|||||||||||||||||||||||)||||||||||||||||, <tipoDato> ID <listaArg>||||
-        <condicion>|||||||||||||||||||||||||||||||||== <valor> {esIgual} <otraCondicion>|!= <valor> <otraCondicion>|> <valor> <otraCondicion>|< <valor> <otraCondicion>|>= <valor> <otraCondicion>|<= <valor> <otraCondicion>|||||
+        <condicion>|||||||||||||||||||||||||||||||||== <valor> {esIgual} <otraCondicion>|!= <valor> {esDiferente} <otraCondicion>|> <valor> {esMayor} <otraCondicion>|< <valor> {esMenor} <otraCondicion>|>= <valor> {esMayorOigual} <otraCondicion>|<= <valor> {esMenorOigual} <otraCondicion>|||||
     <otraCondicion>|||||||||||||||||||||||) {pop}||||||||&& <valor> <condicion>|"|| <valor> <condicion>"|||||||||||
       <constructor>|||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>||||<valor> <otroConstructor>|)|||||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>
   <otroConstructor>|||||||||||||||||||||||)||||||||||||||||, <valor> <otroConstructor>||||

@@ -22,8 +22,6 @@ def obtenerResultadoMat (simbolo1, simbolo2):
   else:
     return "real"
 
-
-
 def tieneValor(simbolo):
   if isinstance(simbolo, Token):
     if simbolo.valor == "verdadero" or \
@@ -35,8 +33,6 @@ def tieneValor(simbolo):
       return True
   elif isinstance(simbolo, Variable):
     return simbolo.valor
-
-
 
 def obtenerTipo (simbolo):
   if isinstance(simbolo, Token):
@@ -65,17 +61,6 @@ def obtenerValor (simbolo):
     return simbolo.valor
   else:
     raise NameError("No se puede obtener valor")
-
-
-def verificarTipo (tipoEsperado, tipoDeVariable):
-  tipoE = obtenerTipo(tipoEsperado)
-  tipoV = obtenerTipo(tipoDeVariable)
-  print(f"TipoEsperado: {tipoE}  TipoVariable {tipoV}")
-  if tipoE == "real" and tipoV == "entero":
-    return True
-  if tipoE == "cadena" and tipoV == "caracter":
-    return True
-  return tipoE == tipoV
 
 def obtenerTablaActual (semantico):
   return semantico.tablaDeSimbolosActual
@@ -155,7 +140,6 @@ def obtenerTipoEstricto (simbolo):
 def verificarTipoEstricto (tipoEsperado, tipoDeVariable):
   tipoE = obtenerTipoEstricto(tipoEsperado)
   tipoV = obtenerTipoEstricto(tipoDeVariable)
-  print(f"TipoEsperado: {tipoE}  TipoVariable {tipoV}")
   if tipoE == "real" and tipoV == "entero":
     return True
   if tipoE == "cadena" and tipoV == "caracter":
@@ -197,23 +181,6 @@ def existeVariable(funcion):
       return funcion(variable)
   return existeVar
 
-@verificacionTiposAsignacion
-def asignar(variable, valor):
-  Triplete("asignar", variable, valor)
-
-@existeVariable
-def imprimir (variable):
-  if variable.valor:
-    Triplete("imprimir", variable.nombre, None)
-  else:
-    raise NameError(f"La variable {variable.nombre} no tiene dato")
-
-@existeVariable
-def leer (variable):
-  variable.valor = True
-  t = Triplete("leer", variable.nombre, None)
-  Triplete("asignar", variable.nombre, t)
-
 def obtenerOperando(semantico, operando):
   if esToken(operando):
     return determinarSimbolo(semantico, operando)
@@ -231,17 +198,17 @@ def obtenerValorParaOperar(operando):
 def esOperacionMatematica (operando1, operando2):
   tipoOp1 = obtenerTipo(operando1)
   tipoOp2 = obtenerTipo(operando2)
-  if tipoOp1 == "real" or tipoOp1 == "entero" or \
-    tipoOp2 == "real" or tipoOp2 == "entero":
+  if (tipoOp1 == "real" or tipoOp1 == "entero") and \
+    (tipoOp2 == "real" or tipoOp2 == "entero"):
     return True
   else:
     return False
 
 def verificarOperadoresMatematicos (funcion):
   def verificarOperadores(semantico):
-    print("LLEGUE")
     operando1 = obtenerOperando(semantico, pop(semantico))
     operando2 = obtenerOperando(semantico, pop(semantico))
+    print(f"{operando1} | {operando2}")
     if esOperacionMatematica(operando1, operando2):
       resultado = obtenerResultadoMat(operando1, operando2)
       op1 = obtenerValorParaOperar(operando1)
@@ -252,7 +219,22 @@ def verificarOperadoresMatematicos (funcion):
       raise TypeError(f"{operando1} y {operando2} no son compatibles")
   return verificarOperadores
 
+@verificacionTiposAsignacion
+def asignar(variable, valor):
+  Triplete("asignar", variable, valor)
 
+@existeVariable
+def imprimir (variable):
+  if variable.valor:
+    Triplete("imprimir", variable.nombre, None)
+  else:
+    raise NameError(f"La variable {variable.nombre} no tiene dato")
+
+@existeVariable
+def leer (variable):
+  variable.valor = True
+  t = Triplete("leer", variable.nombre, None)
+  Triplete("asignar", variable.nombre, t)
 
 @verificarOperadoresMatematicos
 def sumar (op1, op2, resultado):
@@ -270,10 +252,56 @@ def multiplicar (op1, op2, resultado):
 def dividir (op1, op2, resultado):
   return Triplete("dividir", op1, op2, resultado)
 
-def esIgual (semantico):
-  operando1 = obtenerOperando(semantico, pop(semantico))
+
+def verificarOperadoresRelacionales(funcion):
+  def verificarOperadores(semantico):
+    operando1 = obtenerOperando(semantico, pop(semantico))
+    operando2 = obtenerOperando(semantico, pop(semantico))
+    print(f"Operando 1: {operando1} Operando 2: {operando2}")
+    print(f"Operando 1: {tieneValor(operando1)} Operando 2: {tieneValor(operando2)}")
+    if tieneValor(operando1) and tieneValor(operando2):
+      op1 = obtenerValorParaOperar(operando1)
+      op2 = obtenerValorParaOperar(operando2)
+      triplete = funcion(op1, op2)
+      semantico.pilaSemantica.append(triplete)
+    else:
+      if not tieneValor(operando1):
+        raise ValueError(f"El operador {operando1} no es compatible con la operacion" )
+      if not tieneValor(operando2):
+        raise ValueError(f"El operador {operando2} no es compatible con la operacion" )
+  return verificarOperadores
+
+@verificarOperadoresRelacionales
+def esIgual (op1, op2):
+  return Triplete("esIgual", op1, op2)
+
+@verificarOperadoresRelacionales
+def esDiferente (op1, op2):
+  return Triplete("esDiferente", op1, op2)
+
+@verificarOperadoresMatematicos
+def esMayor (op1, op2, resultado):
+  return Triplete("esMayor", op1, op2, resultado)
+
+@verificarOperadoresMatematicos
+def esMenor (op1, op2, resultado):
+  return Triplete("esMenor", op1, op2, resultado)
+
+@verificarOperadoresMatematicos
+def esMayorOigual (op1, op2, resultado):
+  return Triplete("esMayorOigual", op1, op2, resultado)
+
+@verificarOperadoresMatematicos
+def esMenorOigual (op1, op2, resultado):
+  return Triplete("esMenorOigual", op1, op2, resultado)
+
+
+
+
+
+""" operando1 = obtenerOperando(semantico, pop(semantico))
   operando2 = obtenerOperando(semantico, pop(semantico))
-  if verificarTipo(operando1, operando2):
+  if verificarTipoEstricto(operando1, operando2):
     op1 = obtenerValorParaOperar(operando1)
     op2 = obtenerValorParaOperar(operando2)
     t = Triplete("esIgual", op1, op2)
@@ -281,7 +309,7 @@ def esIgual (semantico):
   else:
     raise TypeError("No son compatibles")
 
-
+"""
 
 
 reglas = {"crearAlcance": crearAlcance,
@@ -298,5 +326,10 @@ reglas = {"crearAlcance": crearAlcance,
           "restar": restar,
           "multiplicar": multiplicar,
           "dividir": dividir,
-          "esIgual": esIgual
+          "esIgual": esIgual,
+          "esDiferente": esDiferente,
+          "esMayor": esMayor,
+          "esMayorOigual": esMayorOigual,
+          "esMenor": esMenor,
+          "esMenorOigual": esMenorOigual
         }
