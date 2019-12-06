@@ -32,7 +32,7 @@
     <otraCondicion>|||||||||||||||||||||||)||||||||&& <valor> <condicion>|"|| <valor> <condicion>"|||||||||||
       <constructor>|||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>||||<valor> <otroConstructor>|)|||||||||||||||||||<valor> <otroConstructor>|<valor> <otroConstructor>
   <otroConstructor>|||||||||||||||||||||||)||||||||||||||||, <valor> <otroConstructor>||||
-        <operacion>||||||||||||||||||||?|?||?|?|?|%% <valor>|+ <valor> {sumar}|- <valor>|* <valor>|/ <valor>|?|?|?|?|?|?|?|?|?||?||
+        <operacion>||||||||||||||||||||?|?||?|?|?|%% <valor>|+ <valor> {sumar}|- <valor> {restar}|* <valor> {multiplicar}|/ <valor> {dividir}|?|?|?|?|?|?|?|?|?||?||
          <tipoDato>||||||||||||entero {push}|real {push}|caracter {push}|cadena {push}|bool {push}|||||||||||||||||||||||||||
             <valor>|||||||||||||||||verdadero {push}|falso {push}||||( <tiposValor> <operacion> ) <operacion>||||||||||||||||||||<tiposValor> <operacion>|<tiposValor> <operacion>
        <tiposValor>||||||||||||||||||||||||||||||||||||||||||VALOR {push}|ID {push} <elementosValor>

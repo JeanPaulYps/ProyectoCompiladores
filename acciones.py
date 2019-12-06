@@ -148,6 +148,21 @@ def sumar (interprete, triplete):
   operador2 = obtenerValorMatematico(triplete.arg2, interprete)
   triplete.resultado = operador1 + operador2
 
+def restar (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador2 - operador1
+
+def multiplicar (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador2 * operador1
+
+def dividir (interprete, triplete):
+  operador1 = obtenerValorMatematico(triplete.arg1, interprete)
+  operador2 = obtenerValorMatematico(triplete.arg2, interprete)
+  triplete.resultado = operador2 / operador1
+
 accion = {"crearAlcance": crearAlcance,
           "borrarAlcance": borrarAlcance,
           "inicio": inicio,
@@ -156,5 +171,8 @@ accion = {"crearAlcance": crearAlcance,
           "asignar": asignar,
           "imprimir": imprimir,
           "leer": leer,
-          "sumar": sumar
+          "sumar": sumar,
+          "restar": restar,
+          "multiplicar": multiplicar,
+          "dividir": dividir
         }

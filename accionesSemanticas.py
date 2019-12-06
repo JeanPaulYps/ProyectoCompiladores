@@ -211,6 +211,42 @@ def sumar (semantico):
   else:
     raise TypeError("No son compatibles")
 
+def restar (semantico):
+  operando1 = obtenerOperando(semantico, pop(semantico))
+  operando2 = obtenerOperando(semantico, pop(semantico))
+  if verificarTipo(operando1, operando2):
+    resultado = obtenerResultadoMat(operando1, operando2)
+    op1 = obtenerValorParaOperar(operando1)
+    op2 = obtenerValorParaOperar(operando2)
+    t = Triplete("restar", op1, op2, resultado)
+    semantico.pilaSemantica.append(t)
+  else:
+    raise TypeError("No son compatibles")
+
+def multiplicar (semantico):
+  operando1 = obtenerOperando(semantico, pop(semantico))
+  operando2 = obtenerOperando(semantico, pop(semantico))
+  if verificarTipo(operando1, operando2):
+    resultado = obtenerResultadoMat(operando1, operando2)
+    op1 = obtenerValorParaOperar(operando1)
+    op2 = obtenerValorParaOperar(operando2)
+    t = Triplete("multiplicar", op1, op2, resultado)
+    semantico.pilaSemantica.append(t)
+  else:
+    raise TypeError("No son compatibles")
+
+def dividir (semantico):
+  operando1 = obtenerOperando(semantico, pop(semantico))
+  operando2 = obtenerOperando(semantico, pop(semantico))
+  if verificarTipo(operando1, operando2):
+    resultado = obtenerResultadoMat(operando1, operando2)
+    op1 = obtenerValorParaOperar(operando1)
+    op2 = obtenerValorParaOperar(operando2)
+    t = Triplete("dividir", op1, op2, resultado)
+    semantico.pilaSemantica.append(t)
+  else:
+    raise TypeError("No son compatibles")
+
 
   
     
@@ -227,5 +263,8 @@ reglas = {"crearAlcance": crearAlcance,
           "asignar": asignar,
           "imprimir": imprimir,
           "leer": leer,
-          "sumar": sumar
+          "sumar": sumar,
+          "restar": restar,
+          "multiplicar": multiplicar,
+          "dividir": dividir
         }
